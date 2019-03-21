@@ -5,3 +5,9 @@ docker/run:
 
 docker/stop:
 	docker container stop keywordss-api-dev
+
+image/pull:
+	docker pull tea1013/keywordss-api
+
+image/rm:
+	docker image rm -f tea1013/keywordss-api
