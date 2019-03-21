@@ -1,6 +1,6 @@
 FROM golang:1.12.1-alpine3.9
 
-COPY . /go/src/github.com/hatch-group/keywordss-api/api
+COPY ./api /go/src/github.com/hatch-group/keywordss-api/api
 
 RUN apk update && \
     apk add --no-cache git && \
