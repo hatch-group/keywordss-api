@@ -1,1 +1,2 @@
-api/vendor
+api/tmp
+api/go.sum

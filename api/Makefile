@@ -1,5 +1,5 @@
 run:
-	go run main.go
+	fresh
 
 dep:
 	dep ensure
