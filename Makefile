@@ -11,6 +11,9 @@ docker/stop:
 	docker container stop $(API_CONTAINER_NAME)
 	docker container rm $(API_CONTAINER_NAME)
 
+image/build:
+	docker build -t $(API_REPOSITORY_NAME) .
+
 image/push:
 	docker push $(API_REPOSITORY_NAME)
 
