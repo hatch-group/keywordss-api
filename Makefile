@@ -4,7 +4,7 @@ HOST_APP_BASE:=$(shell pwd)/api
 DOCKER_APP_BASE:=/go/src/github.com/hatch-group/keywordss-api/api
 
 docker/run:
-	docker run -d  -e MYSQL_USER=${MYSQL_USER} -e MYSQL_PASSWORD=${MYSQL_PASSWORD} --name $(API_CONTAINER_NAME) -p 8080:8080 -v $(HOST_APP_BASE):$(DOCKER_APP_BASE) $(API_REPOSITORY_NAME):latest
+	docker run -d --name $(API_CONTAINER_NAME) --env-file _secret/.env -p 8080:8080 -v $(HOST_APP_BASE):$(DOCKER_APP_BASE) $(API_REPOSITORY_NAME):latest
 	@echo 'connect port :8080 !!!'
 
 docker/stop:
