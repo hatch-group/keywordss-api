@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/hatch-group/keywordss-api/api/controller"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -17,39 +19,18 @@ type Users []User
 
 func main() {
 	r := gin.Default()
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello World",
-		})
-	})
-	r.GET("/users", func(c *gin.Context) {
+
+	router := r.Group("/api")
+	{
+		story := &controller.Story{}
 		dburl := os.Getenv("MYSQL_URL")
 		db, err := sqlx.Connect("mysql", dburl)
 		if err != nil {
-			c.JSON(500, gin.H{
-				"message": "mysql connect error",
-			})
+			fmt.Println("mysql connect error")
 		}
-		rows, err := db.Queryx("SELECT * FROM users")
-		if err != nil {
-			c.JSON(500, gin.H{
-				"message": "db select error",
-			})
-		}
-		var user User
-		var users Users
-		for rows.Next() {
-			err := rows.StructScan(&user)
-			if err != nil {
-				c.JSON(500, gin.H{
-					"message": "user bind error",
-				})
-			}
-			users = append(users, user)
-		}
-		c.JSON(200, gin.H{
-			"users": users,
-		})
-	})
+		story.DB = db
+		router.GET("/story", story.IndexGet)
+	}
+
 	r.Run(":8080")
 }
