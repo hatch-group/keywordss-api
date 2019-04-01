@@ -10,13 +10,6 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type User struct {
-	ID   int    `db:"id"`
-	Name string `db:"name"`
-}
-
-type Users []User
-
 func main() {
 	r := gin.Default()
 
