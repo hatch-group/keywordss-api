@@ -20,7 +20,7 @@ type Users []User
 func main() {
 	r := gin.Default()
 
-	router := r.Group("/api")
+	api := r.Group("/api")
 	{
 		story := &controller.Story{}
 		dburl := os.Getenv("MYSQL_URL")
@@ -29,7 +29,13 @@ func main() {
 			fmt.Println("mysql connect error")
 		}
 		story.DB = db
-		router.GET("/story", story.IndexGet)
+		api.GET("/story", story.IndexGet)
+		api.GET("/story/:id", story.ShowItem)
+		api.POST("/story", story.Post)
+		api.PUT("/story", story.Edit)
+		api.DELETE("/story", story.Delete)
+
+		api.GET("/story/:user_id", story.indexMyPost)
 	}
 
 	r.Run(":8080")
