@@ -108,11 +108,11 @@ func (s *Story) Delete(c *gin.Context) {
 	c.String(200, "消去が完了しました！")
 }
 
-func (s *Story) indexMyPost(c *gin.Context) {
+func (s *Story) IndexMyPost(c *gin.Context) {
 	user_id, err := strconv.Atoi(c.Param("user_id"))
 	if err != nil {
 		c.String(500, "failed strvonv")
 	}
-	story, err := model.indexMyPost(s.DB, id)
-	c.JSON(200, story)
+	stories, err := model.indexMyPost(s.DB, id)
+	c.JSON(200, stories)
 }

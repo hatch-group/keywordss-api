@@ -34,8 +34,7 @@ func main() {
 		api.POST("/story", story.Post)
 		api.PUT("/story", story.Edit)
 		api.DELETE("/story", story.Delete)
-
-		api.GET("/story/:user_id", story.indexMyPost)
+		api.GET("/story/:user_id", story.IndexMyPost)
 	}
 
 	r.Run(":8080")
