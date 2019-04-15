@@ -8,12 +8,12 @@ import (
 )
 
 type Story struct {
-	ID         int64     `json:"id" db:"id"`
-	Title      string    `json:"title" db:"title"`
-	Body       string    `json:"body" db:"body"`
-	PostedTime time.Time `json:"posted_time" db:"posted_time"`
-	Keywords   string    `json:"keywords" db:"keywords"`
-	UserId     int64     `json:"user_id" db:"user_id"`
+	ID         int64      `json:"id" db:"id"`
+	Title      string     `json:"title" db:"title"`
+	Body       string     `json:"body" db:"body"`
+	PostedTime *time.Time `json:"posted_time" db:"posted_time"`
+	Keywords   string     `json:"keywords" db:"keywords"`
+	UserId     int64      `json:"user_id" db:"user_id"`
 }
 
 func StoriesAll(db *sqlx.DB) (stories []Story, err error) {
@@ -60,7 +60,7 @@ func (s *Story) Edit(tx *sqlx.Tx, id int) (sql.Result, error) {
 	return stmt.Exec(s.Title, s.Body, id)
 }
 
-func indexMyPost(db *sqlx.DB, id int) (stories []Story, err error) {
+func IndexMyPost(db *sqlx.DB, id int) (stories []Story, err error) {
 	if err := db.Select(&stories, "SELECT * FROM stories where user_id = id"); err != nil {
 		return nil, err
 	}

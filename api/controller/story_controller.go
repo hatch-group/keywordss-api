@@ -39,14 +39,14 @@ func (s *Story) Post(c *gin.Context) {
 	c.BindJSON(&story)
 
 	time := time.Now()
-	story.PostedTime = time
+	story.PostedTime = &time
 
 	tx, err := s.DB.Beginx()
 	if err != nil {
 		c.String(500, "failed strvonv")
 	}
 
-	_, err := story.Insert(tx)
+	result, err := story.Insert(tx)
 	if err != nil {
 		c.String(500, "insert error")
 	}
@@ -72,7 +72,7 @@ func (s *Story) Edit(c *gin.Context) {
 		c.String(500, "start transaction fail")
 	}
 
-	_, err := story.Edit(tx, id)
+	_, err = story.Edit(tx, id)
 	if err != nil {
 		c.String(500, "edit error")
 	}
@@ -96,7 +96,7 @@ func (s *Story) Delete(c *gin.Context) {
 		c.String(500, "start transaction fail")
 	}
 
-	_, err := story.Delete(tx, id)
+	_, err = story.Delete(tx, id)
 	if err != nil {
 		c.String(500, "delete error")
 	}
@@ -113,6 +113,6 @@ func (s *Story) IndexMyPost(c *gin.Context) {
 	if err != nil {
 		c.String(500, "failed strvonv")
 	}
-	stories, err := model.indexMyPost(s.DB, id)
+	stories, err := model.IndexMyPost(s.DB, user_id)
 	c.JSON(200, stories)
 }
