@@ -61,7 +61,7 @@ func (s *Story) Edit(tx *sqlx.Tx, id int) (sql.Result, error) {
 }
 
 func IndexMyPost(db *sqlx.DB, id int) (stories []Story, err error) {
-	if err := db.Select(&stories, "SELECT * FROM stories where user_id = id"); err != nil {
+	if err := db.Select(&stories, "SELECT * FROM stories where user_id = ?", id); err != nil {
 		return nil, err
 	}
 	return stories, nil

@@ -31,6 +31,9 @@ func (s *Story) ShowItem(c *gin.Context) {
 		c.String(500, "failed strvonv")
 	}
 	story, err := model.Show(s.DB, id)
+	if err != nil {
+		c.String(500, "failed model connection")
+	}
 	c.JSON(200, story)
 }
 
@@ -43,7 +46,7 @@ func (s *Story) Post(c *gin.Context) {
 
 	tx, err := s.DB.Beginx()
 	if err != nil {
-		c.String(500, "failed strvonv")
+		c.String(500, "start transaction fail")
 	}
 
 	result, err := story.Insert(tx)
@@ -114,5 +117,8 @@ func (s *Story) IndexMyPost(c *gin.Context) {
 		c.String(500, "failed strvonv")
 	}
 	stories, err := model.IndexMyPost(s.DB, user_id)
+	if err != nil {
+		c.String(500, "failed model connection")
+	}
 	c.JSON(200, stories)
 }
