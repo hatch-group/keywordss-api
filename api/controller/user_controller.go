@@ -14,7 +14,7 @@ func (u *User) UserSignUp(c *gin.Context) {
 	var user model.User
 	c.BindJSON(&user)
 
-	tx, err := s.DB.Beginx()
+	tx, err := u.DB.Beginx()
 	if err != nil {
 		c.String(500, "start transaction fail")
 	}
@@ -35,12 +35,12 @@ func (u *User) UserSignIn(c *gin.Context) {
 	var user model.User
 	c.BindJSON(&user)
 
-	result, err := user.SignIn(s.DB)
+	result, err := user.SignIn(u.DB)
 	if err != nil {
 		c.String(500, "Signin error")
 	}
 	c.JSON(200, gin.H{
-		"name": result.Name,
-		"status": "ログインに成功しました"
+		"name":   result.Name,
+		"status": "ログインに成功しました",
 	})
 }
