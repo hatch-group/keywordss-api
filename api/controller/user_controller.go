@@ -16,19 +16,27 @@ func (u *User) UserSignUp(c *gin.Context) {
 
 	tx, err := u.DB.Beginx()
 	if err != nil {
-		c.String(500, "start transaction fail")
+		c.JSON(500, gin.H{
+			"message": "start transaction fail",
+		})
 	}
 
 	result, err := user.SignUp(tx)
 	if err != nil {
-		c.String(500, "signup error")
+		c.JSON(500, gin.H{
+			"message": "signup error",
+		})
 	}
 	if err := tx.Commit(); err != nil {
-		c.String(500, "tx commit error")
+		c.JSON(500, gin.H{
+			"message": "tx commit error",
+		})
 	}
 	user.ID, err = result.LastInsertId()
 
-	c.String(200, "登録が完了しました")
+	c.JSON(200, gin.H{
+		"message": "投稿に成功しました",
+	})
 }
 
 func (u *User) UserSignIn(c *gin.Context) {
@@ -37,7 +45,9 @@ func (u *User) UserSignIn(c *gin.Context) {
 
 	result, err := user.SignIn(u.DB)
 	if err != nil {
-		c.String(500, "Signin error")
+		c.JSON(500, gin.H{
+			"message": "Signin error",
+		})
 	}
 	c.JSON(200, gin.H{
 		"name":   result.Name,
