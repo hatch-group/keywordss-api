@@ -28,7 +28,7 @@ func (s *Story) IndexGet(c *gin.Context) {
 func (s *Story) ShowItem(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.String(500, "failed strvonv")
+		c.String(500, "failed conversion string to int")
 	}
 	story, err := model.Show(s.DB, id)
 	if err != nil {
@@ -67,7 +67,7 @@ func (s *Story) Edit(c *gin.Context) {
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.String(500, "failed strvonv")
+		c.String(500, "failed conversion string to int")
 	}
 
 	tx, err := s.DB.Beginx()
@@ -91,7 +91,7 @@ func (s *Story) Delete(c *gin.Context) {
 	var story model.Story
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.String(500, "failed strvonv")
+		c.String(500, "failed conversion string to int")
 	}
 
 	tx, err := s.DB.Beginx()
@@ -114,7 +114,7 @@ func (s *Story) Delete(c *gin.Context) {
 func (s *Story) IndexMyPost(c *gin.Context) {
 	user_id, err := strconv.Atoi(c.Param("user_id"))
 	if err != nil {
-		c.String(500, "failed strvonv")
+		c.String(500, "failed conversion string to int")
 	}
 	stories, err := model.IndexMyPost(s.DB, user_id)
 	if err != nil {
