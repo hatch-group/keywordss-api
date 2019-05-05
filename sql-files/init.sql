@@ -1,24 +1,21 @@
-DROP TABLE IF EXISTS story_keyword;
 DROP TABLE IF EXISTS likes;
 DROP TABLE IF EXISTS keywords;
 DROP TABLE IF EXISTS stories;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
-  id BIGINT NOT NULL,
+  id BIGINT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   PRIMARY KEY (id),
   UNIQUE (name)
 );
 
 CREATE TABLE stories (
-  id BIGINT NOT NULL,
+  id BIGINT NOT NULL AUTO_INCREMENT,
   title TEXT NOT NULL,
   body TEXT NOT NULL,
-  status INT NOT NULL,
-  created DATETIME NOT NULL,
-  updated DATETIME NOT NULL,
-  count INT NOT NULL,
+  posted_time TIMESTAMP NOT NULL,
+  keywords JSON NOT NULL,
   user_id BIGINT NOT NULL,
   PRIMARY KEY (id),
   UNIQUE (title(255), body(255)),
@@ -27,7 +24,7 @@ CREATE TABLE stories (
 );
 
 CREATE TABLE keywords (
-  id BIGINT NOT NULL,
+  id BIGINT NOT NULL AUTO_INCREMENT,
   word VARCHAR(255) NOT NULL,
   type INT NOT NULL,
   PRIMARY KEY (id),
@@ -35,7 +32,7 @@ CREATE TABLE keywords (
 );
 
 CREATE TABLE likes (
-  id BIGINT NOT NULL,
+  id BIGINT NOT NULL AUTO_INCREMENT,
   user_id BIGINT NOT NULL,
   story_id BIGINT NOT NULL,
   PRIMARY KEY (id),
@@ -44,16 +41,4 @@ CREATE TABLE likes (
   FOREIGN KEY (story_id)
     REFERENCES stories(id)
 );
-
-CREATE TABLE story_keyword (
-  id BIGINT NOT NULL,
-  story_id BIGINT NOT NULL,
-  keyword_id BIGINT NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (story_id)
-    REFERENCES stories(id),
-  FOREIGN KEY (keyword_id)
-    REFERENCES keywords(id)
-);
-
 
