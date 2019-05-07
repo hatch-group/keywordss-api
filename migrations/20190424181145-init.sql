@@ -3,18 +3,15 @@
 CREATE TABLE users (
   id BIGINT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE (name)
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE stories (
   id BIGINT NOT NULL AUTO_INCREMENT,
   title TEXT NOT NULL,
   body TEXT NOT NULL,
-  status INT NOT NULL,
-  created DATETIME NOT NULL,
-  updated DATETIME NOT NULL,
-  count INT NOT NULL,
+  posted_time TIMESTAMP NOT NULL,
+  keywords JSON NOT NULL,
   user_id BIGINT NOT NULL,
   PRIMARY KEY (id),
   UNIQUE (title(255), body(255)),
