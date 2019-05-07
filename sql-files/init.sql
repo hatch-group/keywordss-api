@@ -27,8 +27,7 @@ CREATE TABLE keywords (
   id BIGINT NOT NULL AUTO_INCREMENT,
   word VARCHAR(255) NOT NULL,
   type INT NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE (word)
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE likes (
