@@ -1,13 +1,9 @@
-DROP TABLE IF EXISTS likes;
-DROP TABLE IF EXISTS keywords;
-DROP TABLE IF EXISTS stories;
-DROP TABLE IF EXISTS users;
+-- +migrate Up
 
 CREATE TABLE users (
   id BIGINT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE (name)
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE stories (
@@ -42,3 +38,9 @@ CREATE TABLE likes (
     REFERENCES stories(id)
 );
 
+-- +migrate Down
+
+DROP TABLE IF EXISTS likes;
+DROP TABLE IF EXISTS keywords;
+DROP TABLE IF EXISTS stories;
+DROP TABLE IF EXISTS users;

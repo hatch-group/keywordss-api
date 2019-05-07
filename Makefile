@@ -7,6 +7,9 @@ HOST_APP_BASE:=$(shell pwd)/api
 DOCKER_APP_BASE:=/go/src/github.com/hatch-group/keywordss-api/api
 DB_VOLUME_PATH:=$(shell pwd)/_secret/keywordss-data
 
+DBNAME := keywordss
+ENV:=development
+
 docker/run:
 	$(MAKE) docker/run/server
 	$(MAKE) docker/run/db
@@ -49,3 +52,18 @@ image/pull:
 
 image/rm:
 	docker image rm -f $(API_REPOSITORY_NAME)
+
+migrate/init:
+	mysql -h 127.0.0.1 -u root -p --port 3306 -e "CREATE DATABASE $(DBNAME)"
+
+migrate/delete:
+	mysql -h 127.0.0.1 -u root -p --port 3306 -e "DROP DATABASE IF EXISTS $(DBNAME)"
+
+migrate/up:
+	sql-migrate up -env=$(ENV)
+
+migrate/down:
+	sql-migrate down -env=$(ENV)
+
+migrate/status:
+	sql-migrate status -env=$(ENV)
